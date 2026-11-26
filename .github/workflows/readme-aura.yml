@@ -1,0 +1,47 @@
+name: Generate profile README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - readme.source.md
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out profile repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Render README and SVG assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          npx --yes readme-aura@1.0.20 build
+          --source readme.source.md
+          --output README.md
+          --assets .github/assets
+          --github-user Ayush-DataAnalyst
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md .github/assets
+          if git diff --cached --quiet; then
+            echo "Generated README is already up to date."
+          else
+            git commit -m "docs: regenerate profile README"
+            git push
+          fi
