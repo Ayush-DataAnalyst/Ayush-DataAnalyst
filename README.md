@@ -10,6 +10,8 @@
 
 ***
 
+<p align="center"><a href="https://www.linkedin.com/in/ayush-sonawane1202/">LinkedIn</a></p>
+
 ## About
 
 I’m a **Data Engineer** focused on scalable data pipelines, cloud data platforms, ETL workflows, warehouses, and distributed processing. My toolkit spans AWS, Python, SQL, PySpark, Spark, Databricks, dbt, Airflow, and Kafka; I also explore machine learning, generative AI, LLMs, and retrieval-augmented generation.
